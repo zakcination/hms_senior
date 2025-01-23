@@ -1,6 +1,85 @@
 Here’s a clear and professional Git description for your Java backend service:
 
 ---
+# README: Quick Guide to Connect to PostgreSQL in Docker
+
+This guide provides simple instructions for setting up and connecting to a PostgreSQL database using Docker. The setup is designed for team members who need quick access to the database.
+
+---
+
+## **1. Prerequisites**
+- Install Docker from [https://www.docker.com/](https://www.docker.com/).
+- Ensure Docker is running by verifying the installation:
+  ```bash
+  docker --version
+  ```
+
+---
+
+## **2. Start PostgreSQL with Docker**
+Run the following command to create and start a PostgreSQL container:
+
+```bash
+docker run --name hms-postgres \
+    -e POSTGRES_USER=admin \
+    -e POSTGRES_PASSWORD=admin \
+    -e POSTGRES_DB=hms \
+    -p 5432:5432 \
+    -d postgres
+```
+
+**Details:**
+- **Username**: `admin`
+- **Password**: `admin`
+- **Database**: `hms`
+- **Port**: `5432`
+
+---
+
+## **3. Connecting to the Database**
+
+### **Using a Client Tool**
+You can connect to the database using a tool like DBeaver, pgAdmin, or any SQL client. Use the following settings:
+- **Host**: `localhost`
+- **Port**: `5432`
+- **Database**: `hms`
+- **Username**: `admin`
+- **Password**: `admin`
+
+### **Using the Command Line**
+Alternatively, connect to the database directly using Docker:
+```bash
+docker exec -it hms-postgres psql -U admin -d hms
+```
+
+---
+
+## **4. Stopping and Restarting the Container**
+
+### **Stop the Container**
+To stop the PostgreSQL container, run:
+```bash
+docker stop hms-postgres
+```
+
+### **Restart the Container**
+To restart the container, run:
+```bash
+docker start hms-postgres
+```
+
+---
+
+## **5. Removing the Container**
+If you need to delete the container (including all data):
+```bash
+docker rm -f hms-postgres
+```
+
+---
+
+This setup ensures a consistent and shareable PostgreSQL environment for your team. Use the credentials provided to connect and start working immediately.
+
 
 ### **NU Housing Management System - Backend Service**
 
