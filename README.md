@@ -1,46 +1,58 @@
-# Housing Management System (HMS)
+🏠 Housing Management System (HMS)
+=================================
 
-A comprehensive housing management system built with Spring Boot, designed to streamline property management operations.
+> A modern, scalable housing management solution built with Spring Boot, designed to revolutionize property management operations.
 
-## Features
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.1.5-brightgreen)
+![Java](https://img.shields.io/badge/Java-17-orange)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-12%2B-blue)
+![License](https://img.shields.io/badge/License-MIT-purple)
 
-- 🏠 Property Management
-  - Property listing and details
-  - Room/Unit management
-  - Maintenance tracking
-  - Occupancy status
+## 🚀 Features
 
-- 👥 User Management
-  - Role-based access control
-  - Tenant profiles
-  - Staff management
-  - Authentication & Authorization
+### Core Functionality
 
-- 📋 Lease Management
-  - Lease creation and tracking
-  - Rent collection
-  - Payment history
-  - Document management
+- **Property Management** 🏢
+  - Smart property listing and details
+  - Dynamic room/unit management
+  - Real-time occupancy tracking
+  - Comprehensive property insights
 
-- 🔧 Maintenance
-  - Maintenance request tracking
-  - Work order management
-  - Staff assignment
-  - Status updates
+- **User Management** 👥
+  - Secure role-based access control
+  - Detailed tenant profiles
+  - Efficient staff management
+  - JWT-based authentication
 
-- 💰 Financial Management
-  - Payment processing
-  - Rent tracking
-  - Financial reporting
-  - Invoice generation
+- **Lease Management** 📋
+  - Automated lease generation
+  - Smart rent collection
+  - Digital document management
+  - Payment tracking
 
-- 📊 Reporting
-  - Occupancy reports
-  - Financial reports
-  - Maintenance reports
-  - Audit logs
+### Advanced Features
 
-## Tech Stack
+- **Maintenance Hub** 🔧
+  - Real-time request tracking
+  - Smart work order management
+  - Automated staff assignment
+  - Progress monitoring
+
+- **Financial Suite** 💰
+  - Secure payment processing
+  - Automated rent tracking
+  - Comprehensive financial reporting
+  - Digital invoice generation
+
+- **Analytics Dashboard** 📊
+  - Real-time occupancy insights
+  - Financial analytics
+  - Maintenance metrics
+  - Detailed audit trails
+
+## 🛠️ Tech Stack
+
+### Backend
 
 - Java 17
 - Spring Boot 3.1.5
@@ -48,94 +60,113 @@ A comprehensive housing management system built with Spring Boot, designed to st
 - Spring Security with JWT
 - Spring Data JPA
 - Swagger/OpenAPI
+
+### Development Tools
+
 - Maven
 - Lombok
 - MapStruct
 
-## Quick Start
+### Frontend (Coming Soon! 🎨)
+>
+> Stay tuned for our modern, responsive frontend implementation!
+
+## ⚡ Quick Start
 
 ### Prerequisites
 
-- Java 17 or higher
-- Maven 3.6 or higher
-- PostgreSQL 12 or higher
+Make sure you have these installed:
+
+- Java 17+
+- Maven 3.6+
+- PostgreSQL 12+
 - Git
 
-### Setup
+### Setup in 5 Minutes ⚡
 
-1. Clone the repository:
+1. **Clone & Navigate**
 
    ```bash
-   git clone https://github.com/yourusername/housing-management-system.git
-   cd housing-management-system
+   git clone git@github.com:zakcination/hms_senior.git
+   cd hms_senior
    ```
 
-2. Create a PostgreSQL database:
+2. **Database Setup**
 
    ```sql
    CREATE DATABASE hms_db;
    ```
 
-3. Configure environment variables:
+3. **Environment Configuration**
 
    ```bash
    cp .env.example .env
-   # Edit .env with your database credentials and other configurations
+   # Update .env with your credentials
    ```
 
-4. Build the project:
+4. **Build & Run**
 
    ```bash
+   # Build the project
    mvn clean install
-   ```
 
-5. Run the application:
-
-   ```bash
+   # Start the application
    mvn spring-boot:run
    ```
 
-6. Access the application:
-   - API: <http://localhost:8080/api/v1>
-   - Swagger UI: <http://localhost:8080/api/v1/swagger-ui.html>
+5. **Access the System**
+   - API Endpoint: <http://localhost:8080/api/v1>
+   - API Documentation: <http://localhost:8080/api/v1/swagger-ui.html>
 
-### Environment Variables
+### 🔐 Environment Setup
 
-Create a `.env` file in the project root with the following variables:
+Create a `.env` file with these configurations:
 
 ```properties
-# Database Configuration
+# Database
 DB_URL=jdbc:postgresql://localhost:5432/hms_db
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
 
-# JWT Configuration
+# Security
 JWT_SECRET=your_jwt_secret
 JWT_EXPIRATION=86400000
 
-# Mail Configuration
+# Email
 MAIL_HOST=smtp.gmail.com
 MAIL_PORT=587
 MAIL_USERNAME=your_email@gmail.com
 MAIL_PASSWORD=your_app_password
 ```
 
-## API Documentation
+## 📚 Documentation
 
-The API documentation is available through Swagger UI at `/api/v1/swagger-ui.html` when the application is running.
+Explore our comprehensive API documentation through Swagger UI at `/api/v1/swagger-ui.html` when the application is running.
 
-## Contributing
+## 🤝 Contributing
+
+We welcome contributions! Here's how:
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+3. Commit your changes (`git commit -m 'Add: Amazing Feature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Support
+## 💪 Support
 
-For support, please open an issue in the GitHub repository or contact the maintainers.
+Need help? We've got you covered:
+
+- 📫 Open an issue in the GitHub repository
+- 🤝 Contact the maintainers
+- 📚 Check out our documentation
+
+---
+
+<div align="center">
+  Made with ❤️ by the HMS Team
+</div>
