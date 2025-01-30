@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="001" author="hms">
+        <createTable tableName="users">
+            <!-- Base entity fields -->
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="updated_by" type="varchar(255)"/>
+            <column name="version" type="int"/>
+            <column name="active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- User specific fields -->
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middle_name" type="varchar(255)"/>
+            <column name="national_id" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="nuid" type="varchar(255)">
+                <constraints unique="true"/>
+            </column>
+            <column name="citizenship" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="residency_code" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="identity_doc_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="identity_doc_no" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="identity_issue_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="local_phone" type="varchar(50)"/>
+            <column name="mobile_phone" type="varchar(50)"/>
+            <column name="role_group" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="position" type="varchar(255)"/>
+            <column name="department" type="varchar(255)"/>
+            <column name="family_members" type="jsonb"/>
+            <column name="domestic_staff" type="jsonb"/>
+            <column name="vehicles" type="jsonb"/>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_roles">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_user_roles_user" references="users(id)"/>
+            </column>
+            <column name="role" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="idx_users_email" tableName="users">
+            <column name="email"/>
+        </createIndex>
+        <createIndex indexName="idx_users_national_id" tableName="users">
+            <column name="national_id"/>
+        </createIndex>
+        <createIndex indexName="idx_users_nuid" tableName="users">
+            <column name="nuid"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog> 

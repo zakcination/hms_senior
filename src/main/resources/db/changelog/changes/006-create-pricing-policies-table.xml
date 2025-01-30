@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="006" author="hms">
+        <createTable tableName="pricing_policies">
+            <!-- Base entity fields -->
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="updated_by" type="varchar(255)"/>
+            <column name="version" type="int"/>
+            <column name="active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Pricing Policy specific fields -->
+            <column name="policy_number" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="property_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_type" type="varchar(50)"/>
+            <column name="daily_rate" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="monthly_rate_with_utilities" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="monthly_rate_without_utilities" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="has_student_fund_discount" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="student_fund_discount_rate" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="other_discount_rate" type="double"/>
+            <column name="effective_from" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="effective_to" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utility_rates" type="jsonb"/>
+            <column name="seasonal_rates" type="jsonb"/>
+            <column name="description" type="text"/>
+        </createTable>
+
+        <createIndex indexName="idx_pricing_policies_number" tableName="pricing_policies">
+            <column name="policy_number"/>
+        </createIndex>
+        <createIndex indexName="idx_pricing_policies_property_type" tableName="pricing_policies">
+            <column name="property_type"/>
+        </createIndex>
+        <createIndex indexName="idx_pricing_policies_room_type" tableName="pricing_policies">
+            <column name="room_type"/>
+        </createIndex>
+        <createIndex indexName="idx_pricing_policies_effective_dates" tableName="pricing_policies">
+            <column name="effective_from"/>
+            <column name="effective_to"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog> 

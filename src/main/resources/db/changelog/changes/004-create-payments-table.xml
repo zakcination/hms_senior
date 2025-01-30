@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="004" author="hms">
+        <createTable tableName="payments">
+            <!-- Base entity fields -->
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="updated_by" type="varchar(255)"/>
+            <column name="version" type="int"/>
+            <column name="active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Payment specific fields -->
+            <column name="payment_number" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="payment_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="due_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_payment_user" references="users(id)"/>
+            </column>
+            <column name="property_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_payment_property" references="properties(id)"/>
+            </column>
+            <column name="lease_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_payment_lease" references="leases(id)"/>
+            </column>
+            <column name="discount" type="double"/>
+            <column name="tariff_rate" type="double"/>
+            <column name="payment_details" type="jsonb"/>
+        </createTable>
+
+        <createIndex indexName="idx_payments_payment_number" tableName="payments">
+            <column name="payment_number"/>
+        </createIndex>
+        <createIndex indexName="idx_payments_user_id" tableName="payments">
+            <column name="user_id"/>
+        </createIndex>
+        <createIndex indexName="idx_payments_property_id" tableName="payments">
+            <column name="property_id"/>
+        </createIndex>
+        <createIndex indexName="idx_payments_lease_id" tableName="payments">
+            <column name="lease_id"/>
+        </createIndex>
+        <createIndex indexName="idx_payments_status" tableName="payments">
+            <column name="status"/>
+        </createIndex>
+        <createIndex indexName="idx_payments_payment_type" tableName="payments">
+            <column name="payment_type"/>
+        </createIndex>
+        <createIndex indexName="idx_payments_due_date" tableName="payments">
+            <column name="due_date"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog> 

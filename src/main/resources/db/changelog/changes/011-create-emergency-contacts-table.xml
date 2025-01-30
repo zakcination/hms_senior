@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="011" author="hms">
+        <createTable tableName="emergency_contacts">
+            <!-- Base entity fields -->
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="updated_by" type="varchar(255)"/>
+            <column name="version" type="int"/>
+            <column name="active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Emergency Contact specific fields -->
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_emergency_contact_user" references="users(id)"/>
+            </column>
+            <column name="full_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="relationship" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="primary_phone" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="secondary_phone" type="varchar(50)"/>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="text"/>
+            <column name="is_primary_contact" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="language" type="varchar(50)"/>
+            <column name="special_instructions" type="text"/>
+            <column name="is_notification_enabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="idx_emergency_contacts_user" tableName="emergency_contacts">
+            <column name="user_id"/>
+        </createIndex>
+        <createIndex indexName="idx_emergency_contacts_primary" tableName="emergency_contacts">
+            <column name="user_id"/>
+            <column name="is_primary_contact"/>
+        </createIndex>
+        <createIndex indexName="idx_emergency_contacts_phone" tableName="emergency_contacts">
+            <column name="primary_phone"/>
+        </createIndex>
+        <createIndex indexName="idx_emergency_contacts_email" tableName="emergency_contacts">
+            <column name="email"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog> 

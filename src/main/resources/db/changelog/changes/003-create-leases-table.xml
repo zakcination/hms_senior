@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="003" author="hms">
+        <createTable tableName="leases">
+            <!-- Base entity fields -->
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="updated_by" type="varchar(255)"/>
+            <column name="version" type="int"/>
+            <column name="active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Lease specific fields -->
+            <column name="contract_number" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_lease_user" references="users(id)"/>
+            </column>
+            <column name="property_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_lease_property" references="properties(id)"/>
+            </column>
+            <column name="check_in_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="check_out_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reservation_status" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="penalties" type="double"/>
+            <column name="deposit" type="double"/>
+            <column name="payments" type="jsonb"/>
+            <column name="resettlement_history" type="jsonb"/>
+        </createTable>
+
+        <createIndex indexName="idx_leases_contract_number" tableName="leases">
+            <column name="contract_number"/>
+        </createIndex>
+        <createIndex indexName="idx_leases_user_id" tableName="leases">
+            <column name="user_id"/>
+        </createIndex>
+        <createIndex indexName="idx_leases_property_id" tableName="leases">
+            <column name="property_id"/>
+        </createIndex>
+        <createIndex indexName="idx_leases_status" tableName="leases">
+            <column name="status"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog> 

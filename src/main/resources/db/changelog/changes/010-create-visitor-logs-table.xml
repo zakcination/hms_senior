@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="010" author="hms">
+        <createTable tableName="visitor_logs">
+            <!-- Base entity fields -->
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="updated_by" type="varchar(255)"/>
+            <column name="version" type="int"/>
+            <column name="active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Visitor Log specific fields -->
+            <column name="visitor_pass_number" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="visitor_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="visitor_identification" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contact_number" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="host_user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_visitor_log_host" references="users(id)"/>
+            </column>
+            <column name="property_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_visitor_log_property" references="properties(id)"/>
+            </column>
+            <column name="scheduled_arrival" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="scheduled_departure" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="actual_arrival" type="timestamp"/>
+            <column name="actual_departure" type="timestamp"/>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="purpose" type="text"/>
+            <column name="vehicle_details" type="jsonb"/>
+            <column name="additional_visitors" type="jsonb"/>
+            <column name="approved_by" type="varchar(255)"/>
+            <column name="approved_at" type="timestamp"/>
+            <column name="notes" type="text"/>
+        </createTable>
+
+        <createIndex indexName="idx_visitor_logs_pass_number" tableName="visitor_logs">
+            <column name="visitor_pass_number"/>
+        </createIndex>
+        <createIndex indexName="idx_visitor_logs_host" tableName="visitor_logs">
+            <column name="host_user_id"/>
+        </createIndex>
+        <createIndex indexName="idx_visitor_logs_property" tableName="visitor_logs">
+            <column name="property_id"/>
+        </createIndex>
+        <createIndex indexName="idx_visitor_logs_status" tableName="visitor_logs">
+            <column name="status"/>
+        </createIndex>
+        <createIndex indexName="idx_visitor_logs_scheduled_arrival" tableName="visitor_logs">
+            <column name="scheduled_arrival"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog> 

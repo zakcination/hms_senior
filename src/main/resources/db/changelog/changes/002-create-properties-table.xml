@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="002" author="hms">
+        <createTable tableName="properties">
+            <!-- Base entity fields -->
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="updated_by" type="varchar(255)"/>
+            <column name="version" type="int"/>
+            <column name="active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Property specific fields -->
+            <column name="property_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="property_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_type" type="varchar(50)"/>
+            <column name="area" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="monthly_rent" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text"/>
+            <column name="max_occupants" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_shared" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="requires_deposit" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deposit_amount" type="double"/>
+            <column name="amenities" type="jsonb"/>
+            <column name="maintenance_history" type="jsonb"/>
+        </createTable>
+
+        <createTable tableName="property_allowed_tenant_types">
+            <column name="property_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_property_tenant_types" references="properties(id)"/>
+            </column>
+            <column name="tenant_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="idx_properties_type" tableName="properties">
+            <column name="property_type"/>
+        </createIndex>
+        <createIndex indexName="idx_properties_status" tableName="properties">
+            <column name="status"/>
+        </createIndex>
+        <createIndex indexName="idx_properties_name" tableName="properties">
+            <column name="property_name"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog> 

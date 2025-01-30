@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="007" author="hms">
+        <createTable tableName="notifications">
+            <!-- Base entity fields -->
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="updated_by" type="varchar(255)"/>
+            <column name="version" type="int"/>
+            <column name="active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Notification specific fields -->
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_notification_user" references="users(id)"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="related_entity_type" type="varchar(100)"/>
+            <column name="related_entity_id" type="bigint"/>
+            <column name="notification_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="read_at" type="timestamp"/>
+            <column name="dismissed_at" type="timestamp"/>
+            <column name="is_important" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="additional_data" type="jsonb"/>
+        </createTable>
+
+        <createIndex indexName="idx_notifications_user" tableName="notifications">
+            <column name="user_id"/>
+        </createIndex>
+        <createIndex indexName="idx_notifications_status" tableName="notifications">
+            <column name="status"/>
+        </createIndex>
+        <createIndex indexName="idx_notifications_type" tableName="notifications">
+            <column name="type"/>
+        </createIndex>
+        <createIndex indexName="idx_notifications_date" tableName="notifications">
+            <column name="notification_date"/>
+        </createIndex>
+        <createIndex indexName="idx_notifications_related_entity" tableName="notifications">
+            <column name="related_entity_type"/>
+            <column name="related_entity_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog> 

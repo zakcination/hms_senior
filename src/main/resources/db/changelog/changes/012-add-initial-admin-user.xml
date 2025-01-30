@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="012" author="hms">
+        <insert tableName="users">
+            <!-- Base entity fields -->
+            <column name="created_at" valueDate="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" valueDate="CURRENT_TIMESTAMP"/>
+            <column name="created_by" value="system"/>
+            <column name="updated_by" value="system"/>
+            <column name="version" valueNumeric="0"/>
+            <column name="active" valueBoolean="true"/>
+
+            <!-- User specific fields -->
+            <column name="first_name" value="System"/>
+            <column name="last_name" value="Administrator"/>
+            <column name="national_id" value="ADMIN001"/>
+            <column name="citizenship" value="KZ"/>
+            <column name="residency_code" value="KZ"/>
+            <column name="identity_doc_type" value="NATIONAL_ID"/>
+            <column name="identity_doc_no" value="ADMIN001"/>
+            <column name="identity_issue_date" valueDate="2024-01-01"/>
+            <column name="email" value="admin@hms.com"/>
+            <column name="role_group" value="ADMINISTRATION"/>
+            <column name="role_type" value="SENIOR"/>
+            <column name="position" value="System Administrator"/>
+            <column name="password" value="$2a$10$xn3LI/AjqicFYZFruSwve.681477XaVNaUQbr1gioaWPn4t1KsnmG"/> <!-- Default password: Admin@123 -->
+        </insert>
+
+        <insert tableName="user_roles">
+            <column name="user_id" valueComputed="(SELECT id FROM users WHERE email = 'admin@hms.com')"/>
+            <column name="role" value="ROLE_ADMIN"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog> 

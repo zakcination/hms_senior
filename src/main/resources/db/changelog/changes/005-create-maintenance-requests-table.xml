@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="005" author="hms">
+        <createTable tableName="maintenance_requests">
+            <!-- Base entity fields -->
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="updated_by" type="varchar(255)"/>
+            <column name="version" type="int"/>
+            <column name="active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Maintenance Request specific fields -->
+            <column name="request_number" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="request_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="request_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="scheduled_date" type="timestamp"/>
+            <column name="completion_date" type="timestamp"/>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_maintenance_request_user" references="users(id)"/>
+            </column>
+            <column name="property_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_maintenance_request_property" references="properties(id)"/>
+            </column>
+            <column name="assigned_staff" type="jsonb"/>
+            <column name="cost" type="double"/>
+            <column name="notes" type="text"/>
+            <column name="attachments" type="jsonb"/>
+            <column name="work_history" type="jsonb"/>
+        </createTable>
+
+        <createIndex indexName="idx_maintenance_requests_number" tableName="maintenance_requests">
+            <column name="request_number"/>
+        </createIndex>
+        <createIndex indexName="idx_maintenance_requests_user" tableName="maintenance_requests">
+            <column name="user_id"/>
+        </createIndex>
+        <createIndex indexName="idx_maintenance_requests_property" tableName="maintenance_requests">
+            <column name="property_id"/>
+        </createIndex>
+        <createIndex indexName="idx_maintenance_requests_status" tableName="maintenance_requests">
+            <column name="status"/>
+        </createIndex>
+        <createIndex indexName="idx_maintenance_requests_priority" tableName="maintenance_requests">
+            <column name="priority"/>
+        </createIndex>
+        <createIndex indexName="idx_maintenance_requests_type" tableName="maintenance_requests">
+            <column name="request_type"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog> 
