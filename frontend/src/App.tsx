@@ -1,8 +1,8 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ThemeProvider, CssBaseline } from '@mui/material';
+import { ThemeProvider, CssBaseline, AppBar, Toolbar, Typography } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
-import { PropertyList } from './components/PropertyList';
+import { Dashboard } from './components/Dashboard';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -30,7 +30,14 @@ function App() {
         <QueryClientProvider client={queryClient}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <PropertyList />
+                <AppBar position="static">
+                    <Toolbar>
+                        <Typography variant="h6">
+                            HMS Dashboard
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <Dashboard />
             </ThemeProvider>
         </QueryClientProvider>
     );
