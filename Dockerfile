@@ -1,13 +1,14 @@
 # Build stage
-FROM maven:3.9.6-eclipse-temurin-17-focal AS build
+FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY . .
 RUN mvn clean package -DskipTests
 
 # Run stage
-FROM eclipse-temurin:17-jre-focal
+FROM openjdk:17-slim
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
+COPY .env.example .env
+
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"] 

@@ -1,0 +1,76 @@
+name: HMS CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, deployment/*, feature/* ]
+  pull_request:
+    branches: [ main, deployment/* ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_DB: hms_db_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+
+    - name: Run Tests
+      run: mvn test
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: hms-backend
+        path: target/*.jar
+
+  deploy-to-staging:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/deployment/main'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: hms-backend
+
+    # Add your deployment steps here
+    # Example for deploying to a cloud service:
+    # - name: Deploy to Cloud
+    #   run: |
+    #     # Add deployment commands
+
+  deploy-to-production:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: hms-backend
+
+    # Add your production deployment steps here 

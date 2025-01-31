@@ -1,38 +1,43 @@
 version: '3.8'
 
 services:
-  app:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - hms-network
+
+  backend:
     build: .
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/hms
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - JWT_SECRET=bnjhn+vEH4axw/of+ecjSvCVDnmSOcYYlW1epsiiHok= # Use a shorter secret for readability
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_URL=jdbc:postgresql://db:5432/hms_db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     networks:
       - hms-network
 
   db:
-    image: postgres:15
+    image: postgres:12
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=hms
+      - POSTGRES_DB=hms_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - hms-network
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres -d hms" ]
-      interval: 5s
-      timeout: 5s
-      retries: 5
 
 volumes:
   postgres_data:
